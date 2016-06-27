@@ -20,3 +20,7 @@
 
 (defn menu-into-map [menu]
   (into {} (rest menu)))
+
+(defn strip-currency-symbols [price]
+  "strips common currency characters and returns a float"
+  (read-string (clojure.string/replace price #"[$€£¢]" "")))
