@@ -12,14 +12,17 @@
   "strips common currency characters and returns a float"
   (read-string (clojure.string/replace price #"[$€£¢]" "")))
 
-(def menu
+(def raw-menu
   (menu-items-to-vectors (load-menu "resources/menu.txt")))
 
 (def target-price
-  (strip-currency-symbols ((first menu) 0)))
+  (strip-currency-symbols ((first raw-menu) 0)))
 
-(defn menu-into-map [menu]
-  (into {} (rest menu)))
+(def menu-map
+  (into {} (rest raw-menu)))
+
+(def menu
+  (zipmap (keys menu-map) (map strip-currency-symbols (vals menu-map))))
 
 (defn -main
   [& args]

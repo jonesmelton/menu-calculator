@@ -15,7 +15,7 @@
     (is (= target-price 15.05)))
   
   (testing "menu has items and prices as k/v pairs"
-    (is (=  ["mixed fruit" "$2.15"] (first (menu-into-map menu))) )))
+    (is (=  ["mixed fruit" "$2.15"] (first menu-map)))))
 
 (deftest currency-manipulation
   (testing "strips dollar signs from price"
