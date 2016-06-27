@@ -12,7 +12,7 @@
     (is (string? (load-menu "resources/menu.txt"))))
   
   (testing "generates target price"
-    (is (= target-price "15.05")))
+    (is (= target-price 15.05)))
   
   (testing "menu has items and prices as k/v pairs"
     (is (=  ["mixed fruit" "$2.15"] (first (menu-into-map menu))) )))

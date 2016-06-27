@@ -8,20 +8,19 @@
 (defn menu-items-to-vectors [menu]
   (csv/read-csv menu))
 
-(defn -main
-  [& args]
-  (println "Hello, World!"))
-
-
 (defn strip-currency-symbols [price]
   "strips common currency characters and returns a float"
   (read-string (clojure.string/replace price #"[$€£¢]" "")))
 
-(def menu 
+(def menu
   (menu-items-to-vectors (load-menu "resources/menu.txt")))
 
 (def target-price
-  ((strip-currency-symbols (first menu)) 0))
+  (strip-currency-symbols ((first menu) 0)))
 
 (defn menu-into-map [menu]
   (into {} (rest menu)))
+
+(defn -main
+  [& args]
+  (println target-price))
