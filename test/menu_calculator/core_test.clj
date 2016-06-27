@@ -3,11 +3,6 @@
             [menu-calculator.core :refer :all]
             [menu-calculator.menu :refer :all]))
 
-            (deftest ci-test
-              (testing "passing test for CI hook"
-                (is (= 0 0))))
-
-
 (deftest menu-loading
   (testing "loads menu from csv"
     (is (string? (load-menu "resources/menu.txt"))))
