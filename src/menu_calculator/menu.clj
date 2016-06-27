@@ -1,14 +1,19 @@
 (ns menu-calculator.menu
   (:require [clojure.data.csv :as csv]))
 
-(defn load-menu [filename]
+(defn load-menu
+  "reads the file at the given path"
+  [filename]
   (slurp filename))
 
-(defn menu-items-to-vectors [menu]
+(defn menu-items-to-vectors
+  "gives a sequence with each line as a vector"
+  [menu]
   (csv/read-csv menu))
 
-(defn strip-currency-symbols [price]
+(defn strip-currency-symbols
   "strips common currency characters and returns a float"
+  [price]
   (read-string (clojure.string/replace price #"[$€£¢]" "")))
 
 (def raw-menu
