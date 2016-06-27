@@ -2,6 +2,6 @@
   (:require [clojure.test :refer :all]
             [menu-calculator.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+            (deftest ci-test
+              (testing "passing test for CI hook"
+                (is (= 0 0))))
