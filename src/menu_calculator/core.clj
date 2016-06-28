@@ -3,7 +3,6 @@
             [clojure.math.combinatorics :as c])
   (:gen-class))
 
-
 (defn price-check
   "checks if a set of prices totals to the correct cost"
   [price-set]
@@ -13,9 +12,6 @@
   "generates a lazy seq of selections and filters for correct total price"
   [item-count]
   (filter price-check (c/selections (vals menu) item-count)))
-
-(def memo-gen-check
-  (memoize gen-and-check-subs))
 
 (def lowest-price
   "lowest price found on the menu"
@@ -32,13 +28,13 @@
   (loop [items (vals menu)
          accum []
          count 0]
-    (if (>= count (/ target-price lowest-price))
+    (if (seq accum)
       (distinct (map sort accum))
       (recur items (concat accum (gen-and-check-subs count)) (inc count)))))
 
-(defn find-combos
+(def find-combos
   "finds combos"
-  [menu total])
+  (distinct (map sort (apply concat (map #(gen-and-check-subs %) (range 1 (/ target-price lowest-price)))))))
 
 (defn -main
   [& args]
