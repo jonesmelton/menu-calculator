@@ -22,20 +22,15 @@
   [menu-combos]
   (distinct (map sort (menu-combos))))
 
-(defn all-selections
-  "gets all possible selections for a given price and menu"
-  [menu]
-  (loop [items (vals menu)
-         accum []
-         count 0]
-    (if (seq accum)
-      (distinct (map sort accum))
-      (recur items (concat accum (gen-and-check-subs count)) (inc count)))))
-
 (def find-combos
   "finds combos"
-  (distinct (map sort (apply concat (map #(gen-and-check-subs %) (range 1 (/ target-price lowest-price)))))))
+  (->> (/ target-price lowest-price)
+       (range 1)
+       (map #(gen-and-check-subs %))
+       (apply concat)
+       (map sort)
+       (distinct)))
 
 (defn -main
   [& args]
-  (prn (all-selections menu)))
+  (prn find-combos))
