@@ -22,8 +22,3 @@
 
   (testing "strips euro symbol from price"
     (is (= 13.49 (strip-currency-symbols "13.49€")))))
-
-
-(deftest summing
-  (testing "sum-total adds up the cost of an order"
-    (is (= 21.8 (sum-order menu)))))
