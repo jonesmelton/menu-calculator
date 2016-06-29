@@ -7,7 +7,7 @@
   (slurp filename))
 
 (defn menu-items-to-vectors
-  "gives a sequence with each line as a vector"
+  "returns a seq of vectors, one for each line"
   [menu]
   (csv/read-csv menu))
 
