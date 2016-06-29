@@ -11,16 +11,13 @@
 (defn gen-and-check-subs
   "generates a lazy seq of selections and filters for correct total price"
   [item-count]
-  (filter price-check (c/selections (vals menu) item-count)))
+  (->> item-count
+       (c/selections (vals menu))
+       (filter price-check)))
 
 (def lowest-price
   "lowest price found on the menu"
   (apply min (vals menu)))
-
-(defn distinct-orders
-  "removes duplicates from selections"
-  [menu-combos]
-  (distinct (map sort (menu-combos))))
 
 (def find-combos
   "finds combos"
