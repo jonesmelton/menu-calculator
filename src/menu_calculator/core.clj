@@ -7,6 +7,7 @@
   "checks if a set of prices totals to the correct cost"
   [price-set]
   (= target-price (reduce + price-set)))
+  "sort and distinct here"
 
 (defn gen-and-check-subs
   "generates a lazy seq of selections and filters for correct total price"
@@ -14,6 +15,7 @@
   (->> item-count
        (c/selections (vals menu))
        (filter price-check)))
+      "replace with combinations + duplicates from internet"
 
 (def lowest-price
   "lowest price found on the menu"
@@ -31,3 +33,4 @@
 (defn -main
   [& args]
   (prn find-combos))
+
