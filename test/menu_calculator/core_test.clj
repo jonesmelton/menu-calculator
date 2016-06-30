@@ -22,3 +22,7 @@
 
   (testing "strips euro symbol from price"
     (is (= 13.49 (strip-currency-symbols "13.49€")))))
+
+(deftest combo-generation
+  (testing "combo names returns the hash"
+    (is (= (combo-names) {"mixed fruit" 1, "hot wings" 2, "sampler plate" 1}))))

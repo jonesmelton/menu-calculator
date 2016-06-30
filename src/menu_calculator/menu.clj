@@ -1,5 +1,6 @@
 (ns menu-calculator.menu
-  (:require [clojure.data.csv :as csv]))
+  (:require [clojure.data.csv :as csv]
+            [clojure.set :refer [map-invert]]))
 
 (defn load-menu
   "reads the file at the given path"
@@ -32,3 +33,8 @@
   "lowest price found on the menu"
   []
   (apply min (vals (menu))))
+
+(defn inverted-menu
+  "swaps menu keys and values"
+  []
+  (map-invert (menu)))

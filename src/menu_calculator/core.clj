@@ -1,6 +1,7 @@
 (ns menu-calculator.core
   (:require [menu-calculator.menu :as menu]
-            [menu-calculator.state :refer [menu-path]])
+            [menu-calculator.state :refer [menu-path]]
+            [clojure.pprint :refer [pprint]])
   (:gen-class))
 
 (defn price-check
@@ -41,6 +42,4 @@
 
 (defn -main
   [& args]
-  (prn args)
-;  (reset! menu-path (menu/raw-menu (apply str args)))
-  (prn (combo-names)))
+  (pprint (combo-names)))
