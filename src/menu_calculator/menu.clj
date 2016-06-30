@@ -16,18 +16,19 @@
   [price]
   (read-string (clojure.string/replace price #"[$€£¢]" "")))
 
-(def raw-menu
+(defn raw-menu []
   (menu-items-to-vectors (load-menu "resources/menu.txt")))
 
-(def target-price
-  (strip-currency-symbols ((first raw-menu) 0)))
+(defn target-price []
+  (strip-currency-symbols ((first (raw-menu)) 0)))
 
-(def menu-map
-  (into {} (rest raw-menu)))
+(defn menu-map []
+  (into {} (rest (raw-menu))))
 
-(def menu
-  (zipmap (keys menu-map) (map strip-currency-symbols (vals menu-map))))
+(defn menu []
+  (zipmap (keys (menu-map)) (map strip-currency-symbols (vals (menu-map)))))
 
-(def lowest-price
+(defn lowest-price
   "lowest price found on the menu"
-  (apply min (vals menu)))
+  []
+  (apply min (vals (menu))))

@@ -6,21 +6,20 @@
 (defn price-check
   "checks if a set of prices totals to the correct cost"
   [price-set]
-  (= target-price (reduce + price-set)))
+  (= (target-price) (reduce + price-set)))
 
 (defn gen-and-check-subs
   "generates a lazy seq of selections and filters for correct total price"
   [item-count]
   (->> item-count
-       (c/selections (vals menu))
+       (c/selections (vals (menu)))
        (filter price-check)))
       "replace with combinations + duplicates from internet"
 
-(defn )
-
-(def find-combos
+(defn find-combos
   "finds combos"
-  (->> (/ target-price lowest-price)
+  []
+  (->> (/ (target-price) (lowest-price))
        (range 1)
        (map #(gen-and-check-subs %))
        (apply concat)
@@ -30,4 +29,4 @@
 
 (defn -main
   [& args]
-  (prn find-combos))
+  (prn (find-combos)))
