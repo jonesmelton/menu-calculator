@@ -8,6 +8,12 @@
   [price-set]
   (= (target-price) (reduce + price-set)))
 
+(defn max-combinations
+  "returns the maximum possible number of items in a valid order"
+  []
+;; +1 because it's for a range and clj ranges are exclusive only
+  (+ 1 (/ (target-price) (lowest-price))))
+
 (defn gen-and-check-subs
   "generates a lazy seq of selections and filters for correct total price"
   [item-count]
@@ -25,12 +31,17 @@
       (concat (map (partial cons car) (make-combos sequence (dec seq-length)))
               (make-combos cdr seq-length)))))
 
+(defn make-all-combos 
+  "generates all combos of a given length or shorter"
+  []
+  )
+
 (defn find-combos
   "finds combos"
   []
-  (->> (/ (target-price) (lowest-price))
+  (->> (max-combos)
        (range 1)
-       (map #(gen-and-check-subs %))
+       (map #(make-combos (vals (menu)) %))
        (apply concat)
        (map sort)
        (distinct)
