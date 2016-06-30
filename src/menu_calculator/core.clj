@@ -1,5 +1,6 @@
 (ns menu-calculator.core
-  (:require [menu-calculator.menu :as menu])
+  (:require [menu-calculator.menu :as menu]
+            [menu-calculator.state :refer [menu-path]])
   (:gen-class))
 
 (defn price-check
@@ -23,7 +24,7 @@
               (make-combos cdr seq-length)))))
 
 (defn make-all-combos
-  "finds combos"
+  "lazily generates combinations until one totals to the target price"
   []
   (->> (max-combinations)
        (range 1)
@@ -33,6 +34,13 @@
        (first)))
 ;;^ remove (first) to find ALL possible orders
 
+(defn combo-names
+  "shows the names of the things to order"
+  []
+  (frequencies (map (partial get (menu/inverted-menu)) (make-all-combos))))
+
 (defn -main
   [& args]
-  (prn (make-all-combos)))
+  (prn args)
+;  (reset! menu-path (menu/raw-menu (apply str args)))
+  (prn (combo-names)))
