@@ -1,5 +1,5 @@
 (ns menu-calculator.core
-  (:require [menu-calculator.menu :refer [menu target-price]]
+  (:require [menu-calculator.menu :refer [menu target-price lowest-price]]
             [clojure.math.combinatorics :as c])
   (:gen-class))
 
@@ -7,7 +7,6 @@
   "checks if a set of prices totals to the correct cost"
   [price-set]
   (= target-price (reduce + price-set)))
-  "sort and distinct here"
 
 (defn gen-and-check-subs
   "generates a lazy seq of selections and filters for correct total price"
@@ -17,9 +16,7 @@
        (filter price-check)))
       "replace with combinations + duplicates from internet"
 
-(def lowest-price
-  "lowest price found on the menu"
-  (apply min (vals menu)))
+(defn )
 
 (def find-combos
   "finds combos"
@@ -28,9 +25,9 @@
        (map #(gen-and-check-subs %))
        (apply concat)
        (map sort)
-       (distinct)))
+       (distinct)
+       (first)))
 
 (defn -main
   [& args]
   (prn find-combos))
-

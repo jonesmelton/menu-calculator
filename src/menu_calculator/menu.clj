@@ -27,3 +27,7 @@
 
 (def menu
   (zipmap (keys menu-map) (map strip-currency-symbols (vals menu-map))))
+
+(def lowest-price
+  "lowest price found on the menu"
+  (apply min (vals menu)))
