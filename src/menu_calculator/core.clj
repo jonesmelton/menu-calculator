@@ -16,6 +16,15 @@
        (filter price-check)))
       "replace with combinations + duplicates from internet"
 
+(defn make-combos
+  "generate all combos of a given length"
+  [sequence seq-length]
+  (when-let [[car & cdr] sequence]
+    (if (= seq-length 1)
+      (map list sequence)
+      (concat (map (partial cons car) (make-combos sequence (dec seq-length)))
+              (make-combos cdr seq-length)))))
+
 (defn find-combos
   "finds combos"
   []
