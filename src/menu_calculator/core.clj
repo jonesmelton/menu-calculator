@@ -1,36 +1,45 @@
 (ns menu-calculator.core
-  (:require [menu-calculator.menu :refer [menu target-price]]
-            [clojure.math.combinatorics :as c])
+  (:require [menu-calculator.menu :as menu]
+            [menu-calculator.state :refer [menu-path]]
+            [clojure.pprint :refer [pprint]])
   (:gen-class))
 
 (defn price-check
   "checks if a set of prices totals to the correct cost"
   [price-set]
-  (= target-price (reduce + price-set)))
-  "sort and distinct here"
+  (= (menu/target-price) (reduce + price-set)))
 
-(defn gen-and-check-subs
-  "generates a lazy seq of selections and filters for correct total price"
-  [item-count]
-  (->> item-count
-       (c/selections (vals menu))
-       (filter price-check)))
-      "replace with combinations + duplicates from internet"
+(defn max-combinations
+  "returns the maximum possible number of items in a valid order"
+  []
+;; +1 because it's for a range and clj ranges are exclusive only
+  (+ 1 (/ (menu/target-price) (menu/lowest-price))))
 
-(def lowest-price
-  "lowest price found on the menu"
-  (apply min (vals menu)))
+(defn make-combos
+  "generate all combos of a given length"
+  [sequence seq-length]
+  (when-let [[car & cdr] sequence]
+    (if (= seq-length 1)
+      (map list sequence)
+      (concat (map (partial cons car) (make-combos sequence (dec seq-length)))
+              (make-combos cdr seq-length)))))
 
-(def find-combos
-  "finds combos"
-  (->> (/ target-price lowest-price)
+(defn make-all-combos
+  "lazily generates combinations until one totals to the target price"
+  []
+  (->> (max-combinations)
        (range 1)
-       (map #(gen-and-check-subs %))
+       (pmap #(make-combos (vals (menu/menu)) %))
        (apply concat)
-       (map sort)
-       (distinct)))
+       (filter price-check)
+       (first)))
+;;^ remove (first) to find ALL possible orders
+
+(defn combo-names
+  "shows the names of the things to order"
+  []
+  (frequencies (map (partial get (menu/inverted-menu)) (make-all-combos))))
 
 (defn -main
   [& args]
-  (prn find-combos))
-
+  (pprint (combo-names)))
