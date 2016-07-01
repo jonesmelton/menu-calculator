@@ -40,4 +40,6 @@
 
 (defn -main
   [& args]
-  (prn (combo-names)))
+  (if (seq (combo-names))
+    (prn (combo-names))
+    (prn "No combinations found")))
