@@ -1,7 +1,5 @@
 (ns menu-calculator.core
-  (:require [menu-calculator.menu :as menu]
-            [menu-calculator.state :refer [menu-path]]
-            [clojure.pprint :refer [pprint]])
+  (:require [menu-calculator.menu :as menu])
   (:gen-class))
 
 (defn price-check
@@ -36,7 +34,7 @@
 ;;^ remove (first) to find ALL possible orders
 
 (defn combo-names
-  "shows the names of the things to order"
+  "shows the names and quantities of the prefect order"
   []
   (frequencies (map (partial get (menu/inverted-menu)) (make-all-combos))))
 
