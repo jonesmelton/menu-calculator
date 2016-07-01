@@ -40,4 +40,4 @@
 
 (defn -main
   [& args]
-  (pprint (combo-names)))
+  (prn (combo-names)))
